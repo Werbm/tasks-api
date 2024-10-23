@@ -16,7 +16,7 @@ It was developed for a job interview test where it was asked me to create this A
 
 
     ```bash
-    git clone https://github.com/Werbm/tasks-api.git . 
+    git clone https://github.com/Werbm/tasks-api.git  
 
     cd backend
     ```

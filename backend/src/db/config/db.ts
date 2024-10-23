@@ -1,5 +1,5 @@
 import 'dotenv/config'
-import { Options } from 'sequelize';
+import { Sequelize } from 'sequelize';
 const {
   DB_USER,
   DB_PASS,
@@ -8,13 +8,12 @@ const {
 
 } = process.env
 
-const config: Options = {
+const config= new Sequelize({
     "username": DB_USER,
     "password": DB_PASS,
     "database": DB_NAME,
     "host": DB_HOST,
     "dialect": "postgres"
   }
-
-export = config;
-
+) 
+export default config;

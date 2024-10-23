@@ -35,9 +35,14 @@ const AuthMiddleware_1 = require("./middleware/AuthMiddleware");
 const swagger_ui_express_1 = __importDefault(require("swagger-ui-express"));
 const yamljs_1 = __importDefault(require("yamljs"));
 const path_1 = __importDefault(require("path"));
+const cors_1 = __importDefault(require("cors"));
+const { ENABLED_CORS } = process.env;
 const app = (0, express_1.default)();
 const swagger = yamljs_1.default.load(path_1.default.join(__dirname, './api/swagger.yaml'));
 app.use(express_1.default.json());
+app.use((0, cors_1.default)({
+    origin: `${ENABLED_CORS}`
+}));
 app.use((0, express_1.urlencoded)({ extended: true }));
 app.use('/task', AuthMiddleware_1.requireAuth, TaskRouter_1.default);
 app.use('/auth', UserRouter_1.default);

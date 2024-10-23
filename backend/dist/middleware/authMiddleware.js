@@ -22,6 +22,7 @@ const requireAuth = (req, res, next) => __awaiter(void 0, void 0, void 0, functi
         const token = authorization.split(" ")[1];
         if (!token) {
             res.status(403).json({ message: "Unauthorized" });
+            return;
         }
         const decodedData = jsonwebtoken_1.default.verify(token, `${JWT_SECRET}`);
         req.user = decodedData;
@@ -29,6 +30,7 @@ const requireAuth = (req, res, next) => __awaiter(void 0, void 0, void 0, functi
     }
     catch (e) {
         res.status(500).json({ message: "Unauthorized" });
+        return;
     }
 });
 exports.requireAuth = requireAuth;

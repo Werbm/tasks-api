@@ -39,10 +39,12 @@ const login = (req, res, _next) => __awaiter(void 0, void 0, void 0, function* (
     const user = yield UserModel_1.default.findOne({ where: { email } });
     if (!user) {
         res.status(404).json({ error: "User not registered" });
+        return;
     }
     const isPassValidate = yield (0, UserModel_1.comparePassword)(password, user.password);
     if (!isPassValidate) {
         res.status(406).json({ error: "Password is incorrect" });
+        return;
     }
     const token = (0, UserModel_1.createToken)(user.password);
     const id = user;

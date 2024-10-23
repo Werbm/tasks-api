@@ -52,6 +52,7 @@ const updateTask = (req, res, _next) => __awaiter(void 0, void 0, void 0, functi
     const updated = yield TaskModel_1.default.findByPk(id);
     if (!updated) {
         res.status(404).json({ message: "Not found" });
+        return;
     }
     res.status(200).json({ message: "Updated", data: updated });
 });

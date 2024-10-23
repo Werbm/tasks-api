@@ -7,12 +7,17 @@ import { requireAuth } from './middleware/AuthMiddleware';
 import swaggerUi from 'swagger-ui-express';
 import YAML from 'yamljs'
 import path from 'path'
+import cors from 'cors'
+const {ENABLED_CORS} = process.env
 
 
 const app = express();
 const swagger = YAML.load(path.join(__dirname, './api/swagger.yaml'))
 
 app.use(express.json());
+app.use(cors({
+    origin: `${ENABLED_CORS}`
+}))
 
 app.use(urlencoded({ extended:true }))
 

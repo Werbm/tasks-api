@@ -1,6 +1,15 @@
-import sequelize, {Model, DataTypes,} from "sequelize"
+import {Model, DataTypes,} from "sequelize"
+import config from "../config/db";
 
-class Task extends Model {}
+class Task extends Model {
+    declare id: string;
+    declare title: string;
+    declare description?: string;
+    declare status: 'pending' | 'done';
+    declare startDate: Date
+    declare updatingDate: Date
+
+}
 
 Task.init({
   id: {
@@ -17,8 +26,7 @@ Task.init({
     allowNull: true
   },
   status: {
-    type: DataTypes.ENUM,
-    values: ['pending', 'done'],
+    type: DataTypes.ENUM('pending', 'done'),
     defaultValue: 'pending',
   },
   startDate: {
@@ -30,10 +38,10 @@ Task.init({
     defaultValue: DataTypes.NOW
   }
   }, {
-    sequelize,
+    sequelize: config,
     modelName: 'Task',
     tableName: 'tasks',
-    timestamps: true
+    timestamps: false
   })
 
-  module.exports = Task;
+  export default Task;

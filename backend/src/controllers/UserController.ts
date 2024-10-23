@@ -7,7 +7,7 @@ export const createUser: RequestHandler = async (req, res, _next) => {
     const existingUser = await User.findOne({where: {email}})
 
     if(existingUser) {
-        res.json({error: "User already registered"})
+        res.status(400).json({error: "User already registered"})
     } 
 
     const hashedPassword = await hashPassword(password, 10);

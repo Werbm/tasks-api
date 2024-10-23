@@ -7,19 +7,19 @@ export const login: RequestHandler = async (req, res, _next) => {
     const user = await User.findOne({where: {email}})
 
     if(!user) {
-        res.json({error: "User not registered"})
+        res.status(404).json({error: "User not registered"})
     } 
 
     const isPassValidate = await comparePassword(password, user!.password)
 
     if (!isPassValidate) {
-        res.json({error: "Password is incorrect"})
+        res.status(406).json({error: "Password is incorrect"})
     }
 
     const token = createToken(user!.password)
 
     const id = user;
-    res.status(200).json({message: "Token Generated", user: {email}, token})
+    res.status(201).json({message: "Token Generated", user: {email}, token})
 
 
 }

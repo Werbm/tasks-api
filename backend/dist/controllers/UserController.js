@@ -38,11 +38,11 @@ const createUser = (req, res, _next) => __awaiter(void 0, void 0, void 0, functi
     const { user, password, email } = req.body;
     const existingUser = yield UserModel_1.default.findOne({ where: { email } });
     if (existingUser) {
-        res.json({ error: "User already registered" });
+        res.status(400).json({ error: "User already registered" });
     }
     const hashedPassword = yield (0, UserModel_1.hashPassword)(password, 10);
     yield UserModel_1.default.create({ user: user, email: email, password: hashedPassword });
     const { id } = user;
-    res.status(201).json({ message: "User Registered", user: { id, email } });
+    res.status(201).json({ message: "User Registered", user: { user, email } });
 });
 exports.createUser = createUser;

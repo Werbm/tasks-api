@@ -16,34 +16,43 @@ exports.updateTask = exports.fetchById = exports.fetchAllTasks = exports.deleteT
 const TaskModel_1 = __importDefault(require("../db/models/TaskModel"));
 const createTask = (req, res, _next) => __awaiter(void 0, void 0, void 0, function* () {
     const task = yield TaskModel_1.default.create(Object.assign({}, req.body));
-    res.status(200).json({ message: 'Success', data: task });
+    res.status(201).json({ message: "Success creating task", data: task });
 });
 exports.createTask = createTask;
 const deleteTask = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
     const deleted = yield TaskModel_1.default.findByPk(id);
     if (!deleted) {
-        res.status(404).json({ message: 'Not found' });
+        res.status(404).json({ message: "Not found" });
     }
     yield TaskModel_1.default.destroy({ where: { id } });
-    res.status(204).send();
+    res.status(204).json({ message: "Deleted Successfully" });
 });
 exports.deleteTask = deleteTask;
 const fetchAllTasks = (req, res, _next) => __awaiter(void 0, void 0, void 0, function* () {
     const fetched = yield TaskModel_1.default.findAll();
-    res.status(200).json({ message: 'Fetched', data: fetched });
+    if (fetched.length === 0) {
+        res.status(204).json({ message: 'No Content' });
+    }
+    res.status(200).json({ message: "Fetched", data: fetched });
 });
 exports.fetchAllTasks = fetchAllTasks;
 const fetchById = (req, res, _next) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
     const task = yield TaskModel_1.default.findByPk(id);
-    res.status(200).json({ message: 'Fetched', data: task });
+    if (!task) {
+        res.status(404).json({ message: "Not found" });
+    }
+    res.status(200).json({ message: "Fetched", data: task });
 });
 exports.fetchById = fetchById;
 const updateTask = (req, res, _next) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
     yield TaskModel_1.default.update(Object.assign({}, req.body), { where: { id } });
     const updated = yield TaskModel_1.default.findByPk(id);
-    res.status(200).json({ message: 'Updated', data: updated });
+    if (!updated) {
+        res.status(404).json({ message: "Not found" });
+    }
+    res.status(200).json({ message: "Updated", data: updated });
 });
 exports.updateTask = updateTask;

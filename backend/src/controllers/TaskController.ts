@@ -16,7 +16,7 @@ export const deleteTask: RequestHandler = async (req, res, next) => {
 
   await Task.destroy({ where: { id } });
 
-  res.status(204).send();
+  res.status(204).json({message: "Deleted Successfully"});
 };
 
 export const fetchAllTasks: RequestHandler = async (req, res, _next) => {

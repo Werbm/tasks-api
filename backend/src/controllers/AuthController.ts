@@ -8,12 +8,14 @@ export const login: RequestHandler = async (req, res, _next) => {
 
     if(!user) {
         res.status(404).json({error: "User not registered"})
+        return
     } 
 
     const isPassValidate = await comparePassword(password, user!.password)
 
     if (!isPassValidate) {
         res.status(406).json({error: "Password is incorrect"})
+        return
     }
 
     const token = createToken(user!.password)

@@ -25,11 +25,13 @@ export const requireAuth = async (
     const token = authorization!.split(" ")[1];
     if (!token) {
       res.status(403).json({ message: "Unauthorized" });
+      return;
     }
     const decodedData = <IDecode>jwt.verify(token, `${JWT_SECRET}`);
     req.user = decodedData;
     next();
   } catch (e) {
     res.status(500).json({ message: "Unauthorized" });
+    return;
   }
 };

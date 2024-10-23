@@ -46,7 +46,8 @@ export const updateTask: RequestHandler = async (req, res, _next) => {
   const updated: Task | null = await Task.findByPk(id);
 
   if (!updated) {
-    res.status(404).json({ message: "Not found" });
+    res.status(404).json({ message: "Not found" })
+    return
   }
 
   res.status(200).json({ message: "Updated", data: updated });

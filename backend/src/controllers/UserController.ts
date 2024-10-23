@@ -8,11 +8,11 @@ export const createUser: RequestHandler = async (req, res, _next) => {
 
     if(existingUser) {
         res.status(400).json({error: "User already registered"})
+        return
     } 
 
     const hashedPassword = await hashPassword(password, 10);
     await User.create({user: user, email: email, password: hashedPassword});
 
-    const {id} = user;
     res.status(201).json({message: "User Registered", user: {user, email}});
 }

@@ -22,27 +22,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-const express_1 = __importStar(require("express"));
-const TaskRouter_1 = __importDefault(require("./routes/TaskRouter"));
-const db_1 = __importDefault(require("./db/config/db"));
-require("dotenv/config");
-const UserRouter_1 = __importDefault(require("./routes/UserRouter"));
-const AuthMiddleware_1 = require("./middleware/AuthMiddleware");
-const app = (0, express_1.default)();
-app.use(express_1.default.json());
-app.use((0, express_1.urlencoded)({ extended: true }));
-app.use('/task', AuthMiddleware_1.requireAuth, TaskRouter_1.default);
-app.use('/auth', UserRouter_1.default);
-app.use((err, _req, res, _next) => {
-    res.status(500).json({ message: err });
-});
-db_1.default.sync().then(() => {
-    console.log('database running');
-}).catch((e) => {
-    console.log("error: ", e);
-});
-exports.default = app;
+const sequelize_1 = require("sequelize");
+const config = __importStar(require("../config/db"));
+exports.default = new sequelize_1.Sequelize(config);

@@ -1,0 +1,41 @@
+
+services:
+  tasksmanagement:
+    build: ./backend
+    ports:
+      - 3001:3001
+    environment:
+      - DB_USER=root
+      - DB_PASS=password
+      - DB_NAME=tasksmanagement
+      - DB_HOST=db
+      - JWT_SECRET=a09sd8as098f09sd8fa0sd9f8
+      - ENABELD_CORS=http://localhost:3001
+    container_name: tasksmanagement-api
+    restart: always
+    depends_on:
+      - db
+    volumes:
+      - ./backend:/task-management-wra
+      - /task-management-wra/node_modules
+
+  db:
+      image: postgres:latest
+      ports:
+        - '5432:5432'
+      restart: always
+      environment:
+        - POSTGRES_USER=root
+        - POSTGRES_PASSWORD=password
+        - POSTGRES_DB=tasksmanagement
+      volumes:
+      - db_data:/var/lib/postgresql/data
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+
+volumes:
+  db_data:

@@ -8,10 +8,11 @@ export const createTask: RequestHandler = async (req, res, _next) => {
 
 export const deleteTask: RequestHandler = async (req, res, next) => {
   const { id } = req.params;
-  const deleted: Task | null = await Task.findByPk(id);
+  const deletedTask: Task | null = await Task.findByPk(id);
 
-  if (!deleted) {
+  if (!deletedTask) {
     res.status(404).json({ message: "Not found" });
+    return;
   }
 
   await Task.destroy({ where: { id } });
@@ -20,13 +21,14 @@ export const deleteTask: RequestHandler = async (req, res, next) => {
 };
 
 export const fetchAllTasks: RequestHandler = async (req, res, _next) => {
-  const fetched: Task[] = await Task.findAll();
+  const fetchedTask: Task[] = await Task.findAll();
 
-  if (fetched.length === 0) {
+  if (fetchedTask.length === 0) {
     res.status(204).json({message: 'No Content'})
+    return;
   }
 
-  res.status(200).json({ message: "Fetched", data: fetched });
+  res.status(200).json({ message: "Fetched", data: fetchedTask });
 };
 
 export const fetchById: RequestHandler = async (req, res, _next) => {
@@ -35,6 +37,7 @@ export const fetchById: RequestHandler = async (req, res, _next) => {
 
   if (!task) {
     res.status(404).json({ message: "Not found" });
+    return;
   }
 
   res.status(200).json({ message: "Fetched", data: task });
@@ -43,12 +46,12 @@ export const fetchById: RequestHandler = async (req, res, _next) => {
 export const updateTask: RequestHandler = async (req, res, _next) => {
   const { id } = req.params;
   await Task.update({ ...req.body }, { where: { id } });
-  const updated: Task | null = await Task.findByPk(id);
+  const updatedTask: Task | null = await Task.findByPk(id);
 
-  if (!updated) {
+  if (!updatedTask) {
     res.status(404).json({ message: "Not found" })
-    return
+    return;
   }
 
-  res.status(200).json({ message: "Updated", data: updated });
+  res.status(200).json({ message: "Updated", data: updatedTask });
 };

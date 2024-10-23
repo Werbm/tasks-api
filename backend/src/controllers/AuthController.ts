@@ -19,7 +19,7 @@ export const login: RequestHandler = async (req, res, _next) => {
     const token = createToken(user!.password)
 
     const id = user;
-    res.status(200).json({message: "Token Generated", user: {id, email}, token})
+    res.status(200).json({message: "Token Generated", user: {email}, token})
 
 
 }

@@ -3,9 +3,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const app_1 = __importDefault(require("./app"));
-require("dotenv/config");
-const PORT = 3001;
-app_1.default.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
-});
+const express_1 = require("express");
+const TaskRouter_1 = __importDefault(require("./TaskRouter"));
+const router = (0, express_1.Router)();
+router.use(TaskRouter_1.default);
+exports.default = router;

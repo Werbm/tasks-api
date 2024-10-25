@@ -2,7 +2,7 @@ import { RequestHandler } from "express";
 import Task from "../db/models/TaskModel";
 
 export const createTask: RequestHandler = async (req, res, _next) => {
-  const task = await Task.create({ ...req.body });
+  const task: Task = await Task.create({ ...req.body });
 
   if (task.title === null ) {
     res.status(400).json({message: 'Title cannot be null'})

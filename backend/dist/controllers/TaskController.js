@@ -21,20 +21,22 @@ const createTask = (req, res, _next) => __awaiter(void 0, void 0, void 0, functi
 exports.createTask = createTask;
 const deleteTask = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
-    const deleted = yield TaskModel_1.default.findByPk(id);
-    if (!deleted) {
+    const deletedTask = yield TaskModel_1.default.findByPk(id);
+    if (!deletedTask) {
         res.status(404).json({ message: "Not found" });
+        return;
     }
     yield TaskModel_1.default.destroy({ where: { id } });
     res.status(204).json({ message: "Deleted Successfully" });
 });
 exports.deleteTask = deleteTask;
 const fetchAllTasks = (req, res, _next) => __awaiter(void 0, void 0, void 0, function* () {
-    const fetched = yield TaskModel_1.default.findAll();
-    if (fetched.length === 0) {
+    const fetchedTask = yield TaskModel_1.default.findAll();
+    if (fetchedTask.length === 0) {
         res.status(204).json({ message: 'No Content' });
+        return;
     }
-    res.status(200).json({ message: "Fetched", data: fetched });
+    res.status(200).json({ message: "Fetched", data: fetchedTask });
 });
 exports.fetchAllTasks = fetchAllTasks;
 const fetchById = (req, res, _next) => __awaiter(void 0, void 0, void 0, function* () {
@@ -42,6 +44,7 @@ const fetchById = (req, res, _next) => __awaiter(void 0, void 0, void 0, functio
     const task = yield TaskModel_1.default.findByPk(id);
     if (!task) {
         res.status(404).json({ message: "Not found" });
+        return;
     }
     res.status(200).json({ message: "Fetched", data: task });
 });
@@ -49,11 +52,11 @@ exports.fetchById = fetchById;
 const updateTask = (req, res, _next) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
     yield TaskModel_1.default.update(Object.assign({}, req.body), { where: { id } });
-    const updated = yield TaskModel_1.default.findByPk(id);
-    if (!updated) {
+    const updatedTask = yield TaskModel_1.default.findByPk(id);
+    if (!updatedTask) {
         res.status(404).json({ message: "Not found" });
         return;
     }
-    res.status(200).json({ message: "Updated", data: updated });
+    res.status(200).json({ message: "Updated", data: updatedTask });
 });
 exports.updateTask = updateTask;

@@ -3,11 +3,6 @@ import Task from "../db/models/TaskModel";
 
 export const createTask: RequestHandler = async (req, res, _next) => {
   const task: Task = await Task.create({ ...req.body });
-
-  if (task.title === null ) {
-    res.status(400).json({message: 'Title cannot be null'})
-    return;
-  }
   
   res.status(201).json({ message: "Success creating task", data: task });
 };
